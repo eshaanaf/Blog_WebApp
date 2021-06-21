@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block  content %}
+
+<div class="shadow-lg p-3 mb-5 bg-body rounded"  >
+<h1>Posts</h1>
+<div class="p-3 mb-2 bg-light text-dark">
+<ul>
+{% for post in object_list %}
+<li> <p class="fs-5"> <a href =" {% url 'article-detail' post.pk %}" class="link-info"> {{post.title}} </a>- <a href="{% url 'category' post.category %}" class="link-info">{{post.category}} </a> - {{post.author.first_name}} {{post.author.last_name}} -{{ post.post_date}}
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+            <a href = "{% url 'update_post' post.pk %}" class="link-info">Edit</a>
+                - <a href = "{% url 'delete_post' post.pk %} " class="link-info">Remove</a>   
+        {% endif %}
+    {% endif %}
+
+<br/>
+<p>
+{{post.snippet}}</p><br/> </li>
+</p>
+{% endfor %}
+</ul>
+</div>
+</div>
+{% endblock %}
